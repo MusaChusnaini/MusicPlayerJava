@@ -56,6 +56,22 @@ public class MusicFlow extends JFrame {
         add(mainContentPanel, BorderLayout.CENTER);
 
         navigate("PLAYER");
+
+        BackEnd.MusicManager.setOnSongChangeEvent(() -> {
+            updatePlayerUI();
+        });
+    }
+
+    // Method untuk update teks dan gambar di PlayerPanel
+    private void updatePlayerUI() {
+        int idx = BackEnd.MusicManager.getCurrentIndex();
+        if (idx != -1) {
+            BackEnd.Lagu lagu = BackEnd.MusicManager.getDatabaseLagu().get(idx);
+            byte[] imgData = BackEnd.MusicManager.getRawCover(idx);
+            ImageIcon icon = (imgData != null) ? new ImageIcon(imgData) : null;
+
+            playerPanel.setSongInfo(lagu.getJudul(), lagu.getArtis(), icon);
+        }
     }
 
     public void playSong(int index, String title, String artist,ImageIcon album) {
@@ -70,7 +86,20 @@ public class MusicFlow extends JFrame {
 
     private void navigate(String sceneName) {
         cardLayout.show(mainContentPanel, sceneName);
-        for (SidebarButton btn : navButtons) btn.setActive(btn.targetScene.equals(sceneName));
+
+        // Jika user pindah ke tab LIBRARY, panggil fungsi refresh
+        if (sceneName.equals("LIBRARY")) {
+            // Cari LibraryPanel di dalam mainContentPanel dan panggil refreshData()
+            for (Component comp : mainContentPanel.getComponents()) {
+                if (comp instanceof LibraryPanel) {
+                    ((LibraryPanel) comp).refreshData();
+                }
+            }
+        }
+
+        for (SidebarButton btn : navButtons) {
+            btn.setActive(btn.targetScene.equals(sceneName));
+        }
     }
 
     private JPanel createSidebar() {
@@ -119,7 +148,27 @@ public class MusicFlow extends JFrame {
     // SCENE 4: ADD MUSIC
     // ========================================================
     class AddMusicPanel extends JPanel {
+        private JTextField txtTitle, txtArtist, txtAlbum, txtFilePath;
+        private File selectedFile;
         public AddMusicPanel() {
+            // 1. Inisialisasi Group Input dan ambil referensi JTextField-nya
+            JPanel groupTitle = createInputGroup("Song Title *", "Enter song title");
+            txtTitle = (JTextField) groupTitle.getComponent(1);
+
+            JPanel groupArtist = createInputGroup("Artist *", "Enter artist name");
+            txtArtist = (JTextField) groupArtist.getComponent(1);
+
+            JPanel groupAlbum = createInputGroup("Album", "Enter album name");
+            txtAlbum = (JTextField) groupAlbum.getComponent(1);
+
+            // 2. Inisialisasi txtFilePath agar tidak NULL
+            txtFilePath = new JTextField("No file selected");
+            txtFilePath.setEditable(false);
+            txtFilePath.setBackground(COL_INPUT);
+            txtFilePath.setForeground(Color.GRAY);
+            txtFilePath.setBorder(BorderFactory.createCompoundBorder(new RoundedBorder(10), new EmptyBorder(10, 15, 10, 15)));
+
+            // --- Layouting ---
             setLayout(new BorderLayout());
             setBackground(COL_BG_MAIN);
             JPanel content = new JPanel();
@@ -128,41 +177,20 @@ public class MusicFlow extends JFrame {
             content.setBorder(new EmptyBorder(40, 60, 40, 60));
 
             // Header
-            JLabel title = new JLabel("Add New Music"); title.setFont(new Font("SansSerif", Font.BOLD, 32));
-            title.setForeground(COL_TEXT);
-            title.setAlignmentX(LEFT_ALIGNMENT);
-            JLabel subtitle = new JLabel("Upload your favorite tracks to your library");
-            subtitle.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            subtitle.setForeground(COL_TEXT_SEC); subtitle.setAlignmentX(LEFT_ALIGNMENT);
-            content.add(title);
-            content.add(Box.createVerticalStrut(5));
-            content.add(subtitle);
+            JLabel headerTitle = new JLabel("Add New Music");
+            headerTitle.setFont(new Font("SansSerif", Font.BOLD, 32));
+            headerTitle.setForeground(COL_TEXT);
+            headerTitle.setAlignmentX(LEFT_ALIGNMENT);
+            content.add(headerTitle);
             content.add(Box.createVerticalStrut(30));
 
-            // Container Form
+            // Form Container
             JPanel formContainer = new JPanel();
             formContainer.setLayout(new BoxLayout(formContainer, BoxLayout.Y_AXIS));
-            formContainer.setBackground(COL_BG_MAIN); formContainer.setAlignmentX(LEFT_ALIGNMENT);
+            formContainer.setBackground(COL_BG_MAIN);
+            formContainer.setAlignmentX(LEFT_ALIGNMENT);
 
-            // Album Art (Single View)
-            JPanel albumSection = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            albumSection.setBackground(COL_BG_MAIN);
-            albumSection.setAlignmentX(LEFT_ALIGNMENT);
-
-            JPanel singleCoverPanel = new ArtPanel(1, 180, 180);
-            JPanel coverWrapper = new JPanel(new BorderLayout(0, 10));
-            coverWrapper.setBackground(COL_BG_MAIN);
-            JLabel lblCover = new JLabel("Album Cover");
-            lblCover.setForeground(COL_TEXT_SEC);
-
-            coverWrapper.add(lblCover, BorderLayout.NORTH);
-            coverWrapper.add(singleCoverPanel, BorderLayout.CENTER);
-
-            albumSection.add(coverWrapper);
-            formContainer.add(albumSection);
-            formContainer.add(Box.createVerticalStrut(25));
-
-            // Inputs
+            // Input Grid
             JPanel inputGrid = new JPanel(new GridBagLayout());
             inputGrid.setBackground(COL_BG_MAIN);
             inputGrid.setAlignmentX(LEFT_ALIGNMENT);
@@ -171,80 +199,80 @@ public class MusicFlow extends JFrame {
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.insets = new Insets(10, 0, 10, 20);
             gbc.weightx = 0.5;
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            inputGrid.add(createInputGroup("Song Title *", "Enter song title"), gbc);
+
+            gbc.gridx = 0; gbc.gridy = 0;
+            inputGrid.add(groupTitle, gbc);
             gbc.gridx = 1;
-            inputGrid.add(createInputGroup("Artist *", "Enter artist name"), gbc);
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            inputGrid.add(createInputGroup("Album", "Enter album name"), gbc);
-            gbc.gridx = 1;
+            inputGrid.add(groupArtist, gbc);
+            gbc.gridx = 0; gbc.gridy = 1;
+            inputGrid.add(groupAlbum, gbc);
+
             formContainer.add(inputGrid);
             formContainer.add(Box.createVerticalStrut(20));
 
-            // File Chooser
-            JLabel lblAudio = new JLabel("Audio File"); lblAudio.setForeground(COL_TEXT_SEC); lblAudio.setAlignmentX(LEFT_ALIGNMENT);
-            formContainer.add(lblAudio); formContainer.add(Box.createVerticalStrut(5));
+            // File Panel
             JPanel filePanel = new JPanel(new BorderLayout(10, 0));
             filePanel.setBackground(COL_BG_MAIN);
             filePanel.setMaximumSize(new Dimension(800, 45));
             filePanel.setAlignmentX(LEFT_ALIGNMENT);
-            JTextField txtFilePath = new JTextField("No file selected");
-            txtFilePath.setEditable(false);
-            txtFilePath.setBackground(COL_INPUT);
-            txtFilePath.setForeground(Color.GRAY);
-            txtFilePath.setBorder(BorderFactory.createCompoundBorder(new RoundedBorder(10), new EmptyBorder(10, 15, 10, 15)));
+
             JButton btnBrowse = new JButton("Choose File");
-            btnBrowse.setPreferredSize(new Dimension(120, 45));
-            btnBrowse.setBackground(new Color(50, 50, 50));
-            btnBrowse.setForeground(Color.WHITE);
-            btnBrowse.setFocusPainted(false);
-            btnBrowse.setBorderPainted(false);
-            btnBrowse.setFont(new Font("SansSerif", Font.BOLD, 12));
-            btnBrowse.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            // ... (Style btnBrowse tetap sama) ...
+
             btnBrowse.addActionListener(e -> {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Select Audio File");
-                fileChooser.setFileFilter(new FileNameExtensionFilter("Audio Files (MP3, WAV)", "mp3", "wav"));
-                int result = fileChooser.showOpenDialog(this);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    txtFilePath.setText(selectedFile.getName());
+                if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                    selectedFile = fileChooser.getSelectedFile();
+                    txtFilePath.setText(selectedFile.getAbsolutePath());
                     txtFilePath.setForeground(Color.WHITE);
+
+                    try {
+                        org.jaudiotagger.audio.AudioFile f = org.jaudiotagger.audio.AudioFileIO.read(selectedFile);
+                        org.jaudiotagger.tag.Tag tag = f.getTag();
+                        if (tag != null) {
+                            txtTitle.setText(tag.getFirst(org.jaudiotagger.tag.FieldKey.TITLE));
+                            txtArtist.setText(tag.getFirst(org.jaudiotagger.tag.FieldKey.ARTIST));
+                            txtAlbum.setText(tag.getFirst(org.jaudiotagger.tag.FieldKey.ALBUM));
+                            txtTitle.setForeground(Color.WHITE);
+                            txtArtist.setForeground(Color.WHITE);
+                            txtAlbum.setForeground(Color.WHITE);
+                        }
+                    } catch (Exception ex) { ex.printStackTrace(); }
                 }
             });
+
             filePanel.add(txtFilePath, BorderLayout.CENTER);
             filePanel.add(btnBrowse, BorderLayout.EAST);
             formContainer.add(filePanel);
             formContainer.add(Box.createVerticalStrut(30));
 
             // Buttons
-            JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0)); btnPanel.setBackground(COL_BG_MAIN); btnPanel.setAlignmentX(LEFT_ALIGNMENT); btnPanel.setMaximumSize(new Dimension(800, 50));
             GradientButton btnAdd = new GradientButton("♫ Add to Library");
-            btnAdd.setPreferredSize(new Dimension(500, 45));
             JButton btnClear = new JButton("Clear");
-            btnClear.setPreferredSize(new Dimension(100, 45));
-            btnClear.setBackground(new Color(50,50,50));
-            btnClear.setForeground(Color.WHITE);
-            btnClear.setFocusPainted(false);
-            btnClear.setBorderPainted(false);
-            btnPanel.add(btnAdd);
-            btnPanel.add(btnClear);
+
+            btnAdd.addActionListener(e -> {
+                String jLagu = txtTitle.getText();
+                String nArtis = txtArtist.getText();
+                String nAlbum = txtAlbum.getText();
+                String pFile  = txtFilePath.getText();
+
+                if (jLagu.isEmpty() || selectedFile == null) {
+                    JOptionPane.showMessageDialog(this, "Data tidak lengkap!");
+                    return;
+                }
+
+                BackEnd.MusicManager.getDatabaseLagu().add(new BackEnd.Lagu(jLagu, nArtis, nAlbum, pFile));
+                BackEnd.MusicManager.simpanDataKeCSV();
+                JOptionPane.showMessageDialog(this, "Berhasil ditambahkan!");
+            });
+
+            JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+            btnPanel.setBackground(COL_BG_MAIN);
+            btnPanel.add(btnAdd); btnPanel.add(btnClear);
             formContainer.add(btnPanel);
 
             content.add(formContainer);
-            content.add(Box.createVerticalStrut(40));
-
-            // Bottom Cards
-            JPanel cardsPanel = new JPanel(new GridLayout(1, 3, 20, 0));
-            cardsPanel.setBackground(COL_BG_MAIN);
-            cardsPanel.setMaximumSize(new Dimension(800, 120));
-            cardsPanel.setAlignmentX(LEFT_ALIGNMENT);
-            content.add(cardsPanel);
-
             JScrollPane scroll = new JScrollPane(content); scroll.setBorder(null);
-            scroll.getVerticalScrollBar().setUnitIncrement(16);
             add(scroll, BorderLayout.CENTER);
         }
 
@@ -452,6 +480,7 @@ public class MusicFlow extends JFrame {
     // SCENE LAINNYA
     // ========================================================
     class LibraryPanel extends JPanel {
+        DefaultTableModel model;
         public LibraryPanel(MusicFlow frame) {
             setLayout(new BorderLayout());
             setBackground(COL_BG_MAIN);
@@ -466,13 +495,13 @@ public class MusicFlow extends JFrame {
             String[] cols = {"#", "TITLE", "ARTIST", "ALBUM", "PATH", ""};
 
             // DefaultTableModel tanpa data awal (kosong)
-            DefaultTableModel model = new DefaultTableModel(cols, 0) {
+            model = new DefaultTableModel(cols, 0) {
                 @Override
                 public boolean isCellEditable(int r, int c) {
                     return false;
                 }
             };
-
+            refreshData();
             // --- LOGIKA MEMBACA CSV ---
             try {
                 File file = new File("musics.csv");
@@ -510,6 +539,29 @@ public class MusicFlow extends JFrame {
             scroll.getViewport().setBackground(COL_BG_MAIN);
             scroll.setBorder(null);
             add(scroll, BorderLayout.CENTER);
+        }
+        public void refreshData() {
+            model.setRowCount(0); // Hapus data lama di tabel
+            try {
+                File file = new File("musics.csv");
+                if (file.exists()) {
+                    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file));
+                    String line;
+                    int rowNum = 1;
+                    while ((line = br.readLine()) != null) {
+                        String[] data = line.split(",");
+                        if (data.length >= 4) {
+                            model.addRow(new Object[]{
+                                    String.valueOf(rowNum++),
+                                    data[0], data[1], data[2], data[3], "⋮"
+                            });
+                        }
+                    }
+                    br.close();
+                }
+            } catch (Exception e) {
+                System.err.println("Gagal refresh library: " + e.getMessage());
+            }
         }
     }
 
@@ -721,7 +773,32 @@ public class MusicFlow extends JFrame {
         table.getColumnModel().getColumn(0).setMaxWidth(50);
         table.getColumnModel().getColumn(model.getColumnCount()-1).setMaxWidth(50);
     }
-    private void showPopupMenu(MouseEvent e, int row, DefaultTableModel model, Component parent) { JPopupMenu popup = new JPopupMenu(); popup.setBackground(new Color(40, 40, 40)); popup.setBorder(BorderFactory.createLineBorder(new Color(60,60,60))); JMenuItem delItem = new JMenuItem("Delete Song"); delItem.setBackground(new Color(40, 40, 40)); delItem.setForeground(new Color(255, 80, 80)); delItem.setBorder(new EmptyBorder(10, 20, 10, 20)); delItem.addActionListener(evt -> model.removeRow(row)); popup.add(delItem); popup.show(e.getComponent(), e.getX(), e.getY()); }
+    private void showPopupMenu(MouseEvent e, int row, DefaultTableModel model, Component parent) {
+        JPopupMenu popup = new JPopupMenu();
+        // ... styling popup ...
+        if (row == BackEnd.MusicManager.getCurrentIndex()) {
+            BackEnd.MusicManager.stopLagu();
+        }
+        JMenuItem delItem = new JMenuItem("Delete Song");
+        delItem.addActionListener(evt -> {
+            // 1. Hapus dari ArrayList di Backend
+            // Karena urutan tabel = urutan ArrayList
+            BackEnd.MusicManager.getDatabaseLagu().remove(row);
+
+            // 2. Simpan perubahan ke CSV agar permanen
+            BackEnd.MusicManager.simpanDataKeCSV();
+
+            // 3. Refresh tampilan LibraryPanel
+            if (parent instanceof LibraryPanel) {
+                ((LibraryPanel) parent).refreshData();
+            }
+
+            JOptionPane.showMessageDialog(parent, "Lagu berhasil dihapus!");
+        });
+
+        popup.add(delItem);
+        popup.show(e.getComponent(), e.getX(), e.getY());
+    }
 
     // --- CUSTOM BUTTONS ---
     class GradientStopButton extends JButton {

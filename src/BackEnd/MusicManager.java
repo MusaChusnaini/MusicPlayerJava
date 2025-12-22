@@ -77,6 +77,11 @@ public class MusicManager {
         }
     }
 
+    private static Runnable onSongChangeEvent;
+
+    public static void setOnSongChangeEvent(Runnable event) {
+        onSongChangeEvent = event;
+    }
     // --- KONTROL MUSIK (STREAMING) ---
     public static void playLagu(int index) {
         if (index < 0 || index >= databaseLagu.size()) {
@@ -95,8 +100,13 @@ public class MusicManager {
                 player.play();
 
                 // Jika lagu selesai secara alami, lanjut ke next otomatis (optional)
-                if (player.isComplete()) {
-                    nextLagu();
+                if (player != null && player.isComplete()) {
+                    nextLagu(); // Pindah index di backend
+
+                    // PANGGIL REFRESH UI DI FRONTEND
+                    if (onSongChangeEvent != null) {
+                        javax.swing.SwingUtilities.invokeLater(onSongChangeEvent);
+                    }
                 }
             } catch (Exception e) {
                 System.err.println("Gagal memutar file: " + e.getMessage());
@@ -199,7 +209,7 @@ public class MusicManager {
     }
 
     // --- DATABASE CSV ---
-    private static void simpanDataKeCSV() {
+    public static void simpanDataKeCSV() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(DATABASE_FILE))) {
             for (Lagu lagu : databaseLagu) {
                 // Gunakan semicolon (;) jika judul lagu mengandung koma

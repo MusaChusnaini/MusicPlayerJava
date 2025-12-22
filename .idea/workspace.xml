@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Adding xml metadata">
+    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Menambahkan Fitur dari Backend">
+      <change afterPath="$PROJECT_DIR$/Music/I Really Want To Stay At Your House.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playlist.csv" beforeDir="false" afterPath="$PROJECT_DIR$/musics.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/musics.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" afterDir="false" />
@@ -17,7 +18,6 @@
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientPlayButton.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" afterDir="false" />
@@ -52,7 +52,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="backend" />
+        <entry key="$PROJECT_DIR$" value="final-playlist-feature-create" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -153,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766380485643</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Menambahkan Fitur dari Backend">
+      <option name="closed" value="true" />
+      <created>1766403345693</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766403345693</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -163,6 +171,7 @@
     <MESSAGE value="Menambahkan Lagu Bat Country" />
     <MESSAGE value="Menambahkan CSV" />
     <MESSAGE value="Adding xml metadata" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding xml metadata" />
+    <MESSAGE value="Menambahkan Fitur dari Backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan Fitur dari Backend" />
   </component>
 </project>
