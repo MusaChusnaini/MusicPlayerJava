@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Adding xml metadata">
+    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="antarmuka v2.3 rapih">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playlist.csv" beforeDir="false" afterPath="$PROJECT_DIR$/musics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/musics.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$2.class" afterDir="false" />
@@ -17,7 +17,6 @@
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientPlayButton.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" afterDir="false" />
@@ -74,6 +73,7 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="37AFwvMOkHMY4veNMPr9rY83kpb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -87,10 +87,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "final-before-merge",
+    "git-widget-placeholder": "final-playlist-feature-create",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/aa/OneDrive/Dokumen/GitHub/MusicPlayerJava/Music",
+    "last_opened_file_path": "D:/jlayer-1.0.1.jar",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
@@ -163,6 +163,7 @@
     <MESSAGE value="Menambahkan Lagu Bat Country" />
     <MESSAGE value="Menambahkan CSV" />
     <MESSAGE value="Adding xml metadata" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding xml metadata" />
+    <MESSAGE value="antarmuka v2.3 rapih" />
+    <option name="LAST_COMMIT_MESSAGE" value="antarmuka v2.3 rapih" />
   </component>
 </project>
