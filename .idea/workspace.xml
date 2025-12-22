@@ -4,36 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Menambahkan Fitur dari Backend">
-      <change afterPath="$PROJECT_DIR$/Music/I Really Want To Stay At Your House.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/musics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/musics.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$AddMusicPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$AddMusicPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PurpleButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PurpleButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$RoundedBorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$RoundedBorder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$SidebarButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$SidebarButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow.class" afterDir="false" />
-    </list>
+    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Perbaiki fitur dan refresh scene" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766403345693</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Perbaiki fitur dan refresh scene">
+      <option name="closed" value="true" />
+      <created>1766424589717</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1766424589717</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -172,6 +151,7 @@
     <MESSAGE value="Menambahkan CSV" />
     <MESSAGE value="Adding xml metadata" />
     <MESSAGE value="Menambahkan Fitur dari Backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan Fitur dari Backend" />
+    <MESSAGE value="Perbaiki fitur dan refresh scene" />
+    <option name="LAST_COMMIT_MESSAGE" value="Perbaiki fitur dan refresh scene" />
   </component>
 </project>
