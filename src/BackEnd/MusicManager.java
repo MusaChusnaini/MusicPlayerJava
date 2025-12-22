@@ -14,12 +14,20 @@ import java.util.logging.Logger;
 
 public class MusicManager {
     private static ArrayList<Lagu> databaseLagu = new ArrayList<>();
-    private static final String DATABASE_FILE = "playlist.csv";
+    private static String DATABASE_FILE = "musics.csv";
+
+    public static ArrayList<Lagu> getDatabaseLagu() {
+        return databaseLagu;
+    }
 
     // Player variables
     private static Player player;
     private static Thread playerThread;
     private static int currentIndex = -1;
+
+    public static int getCurrentIndex() {
+        return currentIndex;
+    }
 
     public static void main(String[] args) {
         // Matikan log merah JAudioTagger
@@ -72,7 +80,7 @@ public class MusicManager {
     // --- KONTROL MUSIK (STREAMING) ---
     public static void playLagu(int index) {
         if (index < 0 || index >= databaseLagu.size()) {
-            System.out.println("Lagu tidak ditemukan!");
+            System.out.println("Lagu tidak ditemukan! Indeks : " + index);
             return;
         }
 
@@ -202,7 +210,26 @@ public class MusicManager {
         }
     }
 
-    private static void loadDataDariCSV() {
+    // Tambahkan di MusicManager.java
+    public static byte[] getRawCover(int index) {
+        try {
+            // Pastikan databaseLagu sudah di-load dari CSV
+            String path = databaseLagu.get(index).getPath();
+            File file = new File(path);
+
+            org.jaudiotagger.audio.AudioFile f = org.jaudiotagger.audio.AudioFileIO.read(file);
+            org.jaudiotagger.tag.Tag tag = f.getTag();
+
+            if (tag != null && tag.getFirstArtwork() != null) {
+                return tag.getFirstArtwork().getBinaryData();
+            }
+        } catch (Exception e) {
+            System.err.println("Gagal mengambil cover: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static void loadDataDariCSV() {
         File file = new File(DATABASE_FILE);
         if (!file.exists()) return;
 

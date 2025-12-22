@@ -55,11 +55,17 @@ public class MusicFlow extends JFrame {
 
         add(mainContentPanel, BorderLayout.CENTER);
 
-        navigate("ADD_MUSIC");
+        navigate("PLAYER");
     }
 
-    public void playSong(String title, String artist) {
-        playerPanel.setSongInfo(title, artist);
+    public void playSong(int index, String title, String artist,ImageIcon album) {
+        BackEnd.MusicManager.playLagu(index);
+
+        // Update tampilan PlayerPanel (Teks & Gambar)
+        playerPanel.setSongInfo(title, artist, album);
+
+        // Pindah ke tab PLAYER secara otomatis saat lagu diklik
+        navigate("PLAYER");
     }
 
     private void navigate(String sceneName) {
@@ -99,6 +105,8 @@ public class MusicFlow extends JFrame {
     }
 
     public static void main(String[] args) {
+        BackEnd.MusicManager.loadDataDariCSV();
+
         try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception e){
@@ -172,7 +180,6 @@ public class MusicFlow extends JFrame {
             gbc.gridy = 1;
             inputGrid.add(createInputGroup("Album", "Enter album name"), gbc);
             gbc.gridx = 1;
-            inputGrid.add(createInputGroup("Duration (seconds)", "180", "3:00"), gbc);
             formContainer.add(inputGrid);
             formContainer.add(Box.createVerticalStrut(20));
 
@@ -234,9 +241,6 @@ public class MusicFlow extends JFrame {
             cardsPanel.setBackground(COL_BG_MAIN);
             cardsPanel.setMaximumSize(new Dimension(800, 120));
             cardsPanel.setAlignmentX(LEFT_ALIGNMENT);
-            cardsPanel.add(createFeatureCard("♫", "Quick", "Easy to add", new Color(189, 0, 255)));
-            cardsPanel.add(createFeatureCard("⬆", "Simple", "Drag & drop", new Color(255, 0, 128)));
-            cardsPanel.add(createFeatureCard("✔", "Instant", "Ready to play", new Color(0, 255, 128)));
             content.add(cardsPanel);
 
             JScrollPane scroll = new JScrollPane(content); scroll.setBorder(null);
@@ -302,9 +306,9 @@ public class MusicFlow extends JFrame {
     // SCENE: PLAYER PANEL
     // ========================================================
     class PlayerPanel extends JPanel {
-        private JLabel lblTitle, lblArtist;
-        private GradientPlayButton mainPlayBtn;
-        private GradientPlayButton barPlayBtn;
+        private JLabel lblTitle, lblArtist, lblCover; // Tambahkan lblCover
+
+        private GradientStopButton barPlayBtn;
 
         public PlayerPanel() {
             setLayout(new BorderLayout());
@@ -316,70 +320,110 @@ public class MusicFlow extends JFrame {
             contentBox.setLayout(new BoxLayout(contentBox, BoxLayout.Y_AXIS));
             contentBox.setOpaque(false);
 
-            mainPlayBtn = new GradientPlayButton(100);
-            mainPlayBtn.setAlignmentX(CENTER_ALIGNMENT);
+            // --- KOMPONEN ALBUM ART ---
+            lblCover = new JLabel();
+            lblCover.setAlignmentX(CENTER_ALIGNMENT);
+            lblCover.setPreferredSize(new Dimension(300, 300));
+            lblCover.setMaximumSize(new Dimension(300, 300));
+            // Set gambar default jika belum ada lagu
+            setPlaceholderCover();
+
+
             lblTitle = new JLabel("No Song Playing");
             lblTitle.setFont(new Font("SansSerif", Font.BOLD, 32));
-            lblTitle.setForeground(Color.WHITE); lblTitle.setAlignmentX(CENTER_ALIGNMENT);
+            lblTitle.setForeground(Color.WHITE);
+            lblTitle.setAlignmentX(CENTER_ALIGNMENT);
+
             lblArtist = new JLabel("Select from library");
             lblArtist.setForeground(COL_TEXT_SEC);
             lblArtist.setFont(new Font("SansSerif", Font.PLAIN, 18));
             lblArtist.setAlignmentX(CENTER_ALIGNMENT);
 
-            contentBox.add(mainPlayBtn);
-            contentBox.add(Box.createVerticalStrut(40)); contentBox.add(lblTitle); contentBox.add(Box.createVerticalStrut(10)); contentBox.add(lblArtist);
+            // --- SUSUNAN HIERARKI ---
+            contentBox.add(lblCover); // 1. Gambar paling atas
+            contentBox.add(Box.createVerticalStrut(30));
+            contentBox.add(lblTitle); // 2. Judul
+            contentBox.add(Box.createVerticalStrut(10));
+            contentBox.add(lblArtist); // 3. Artis
+            contentBox.add(Box.createVerticalStrut(40));
+
             centerPanel.add(contentBox);
             add(centerPanel, BorderLayout.CENTER);
             add(createFullPlaybackBar(), BorderLayout.SOUTH);
         }
 
-        public void setSongInfo(String title, String artist) {
+        public void setSongInfo(String title, String artist, ImageIcon coverIcon) {
             lblTitle.setText(title);
             lblArtist.setText(artist);
-            mainPlayBtn.setPlaying(true);
-            barPlayBtn.setPlaying(true); repaint();
+
+            if (coverIcon != null) {
+                // Resize gambar agar pas 300x300
+                Image img = coverIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+                lblCover.setIcon(new ImageIcon(img));
+            } else {
+                setPlaceholderCover();
+            }
+            repaint();
         }
 
+        private void setPlaceholderCover() {
+            // Membuat kotak gradient sebagai pengganti jika tidak ada cover
+            lblCover.setIcon(new Icon() {
+                @Override
+                public void paintIcon(Component c, Graphics g, int x, int y) {
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setPaint(new GradientPaint(0, 0, COL_CARD, 300, 300, COL_SIDEBAR));
+                    g2.fillRoundRect(0, 0, 300, 300, 20, 20);
+                    g2.setColor(COL_TEXT_SEC);
+                    g2.drawString("No Cover", 120, 150);
+                }
+                @Override public int getIconWidth() { return 300; }
+                @Override public int getIconHeight() { return 300; }
+            });
+        }
+
+        private void updateUIFromBackend() {
+            // 1. Dapatkan index lagu yang sedang aktif sekarang dari Backend
+            int currentIndex = BackEnd.MusicManager.getCurrentIndex();
+
+            if (currentIndex != -1) {
+                // 2. Ambil objek lagu dari database Backend
+                BackEnd.Lagu laguAktif = BackEnd.MusicManager.getDatabaseLagu().get(currentIndex);
+
+                // 3. Ambil data gambar cover
+                byte[] rawImg = BackEnd.MusicManager.getRawCover(currentIndex);
+                ImageIcon coverIcon = (rawImg != null) ? new ImageIcon(rawImg) : null;
+
+                // 4. Update tampilan PlayerPanel
+                setSongInfo(laguAktif.getJudul(), laguAktif.getArtis(), coverIcon);
+            }
+        }
         private JPanel createFullPlaybackBar() {
             JPanel bar = new JPanel(new BorderLayout(0, 20));
             bar.setBackground(COL_CARD);
             bar.setBorder(new EmptyBorder(25, 40, 25, 40));
             JPanel progressPanel = new JPanel(new BorderLayout(15, 0));
             progressPanel.setOpaque(false);
-            JLabel lblStart = new JLabel("0:45");
-            lblStart.setForeground(COL_TEXT_SEC);
-            JLabel lblEnd = new JLabel("4:20");
-            lblEnd.setForeground(COL_TEXT_SEC);
-            JProgressBar progressBar = new JProgressBar();
-            progressBar.setValue(35);
-            progressBar.setPreferredSize(new Dimension(100, 8));
-            progressBar.setForeground(COL_ACCENT);
-            progressBar.setBackground(new Color(50,50,50));
-            progressBar.setBorderPainted(false);
-            progressBar.setUI(new BasicProgressBarUI() {
-                protected Color getSelectionBackground() {
-                    return COL_ACCENT;
-                }
-                protected Color getSelectionForeground() {
-                    return COL_ACCENT;
-                }
-            });
-            progressPanel.add(lblStart, BorderLayout.WEST);
-            progressPanel.add(progressBar, BorderLayout.CENTER);
-            progressPanel.add(lblEnd, BorderLayout.EAST);
+
 
             JPanel controls = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
             controls.setOpaque(false);
-            JButton btnShuffle = createIconButton("🔀", 18);
             JButton btnPrev = createIconButton("⏮", 28);
-            barPlayBtn = new GradientPlayButton(60);
+            barPlayBtn = new GradientStopButton(60);
             JButton btnNext = createIconButton("⏭", 28);
-            JButton btnRepeat = createIconButton("🔁", 18);
-            controls.add(btnShuffle);
+
+            btnPrev.addActionListener(e -> {
+                BackEnd.MusicManager.prevLagu();
+                updateUIFromBackend();
+            });
+            btnNext.addActionListener(e -> {
+                BackEnd.MusicManager.nextLagu();
+                updateUIFromBackend();
+            });
+
             controls.add(btnPrev);
             controls.add(barPlayBtn);
             controls.add(btnNext);
-            controls.add(btnRepeat);
             bar.add(progressPanel, BorderLayout.NORTH);
             bar.add(controls, BorderLayout.CENTER);
             return bar;
@@ -409,28 +453,59 @@ public class MusicFlow extends JFrame {
     // ========================================================
     class LibraryPanel extends JPanel {
         public LibraryPanel(MusicFlow frame) {
-            setLayout(new BorderLayout()); setBackground(COL_BG_MAIN);
+            setLayout(new BorderLayout());
+            setBackground(COL_BG_MAIN);
             setBorder(new EmptyBorder(40, 40, 40, 40));
+
             JLabel title = new JLabel("Your Library");
             title.setFont(new Font("SansSerif", Font.BOLD, 32));
             title.setForeground(COL_TEXT);
             add(title, BorderLayout.NORTH);
-            String[] cols = {"#", "TITLE", "ARTIST", "ALBUM", "DURATION", ""};
-            Object[][] data = {
-                    {"1", "Midnight Dreams", "Luna Echo", "Nocturnal", "4:05", "⋮"},
-                    {"2", "Electric Sunrise", "Nova Beats", "Dawn", "3:18", "⋮"},
-                    {"3", "Vintage Vibes", "Retro Soul", "Classic", "3:43", "⋮"},
-                    {"4", "Ocean Waves", "Coastal Dreams", "Blue Horizon", "4:27", "⋮"},
-                    {"5", "City Lights", "Urban Symphony", "Metropolitan", "3:21", "⋮"}
-            };
-            DefaultTableModel model = new DefaultTableModel(data, cols) {
-                public boolean isCellEditable(int r, int c)
-                {
+
+            // Header Tabel
+            String[] cols = {"#", "TITLE", "ARTIST", "ALBUM", "PATH", ""};
+
+            // DefaultTableModel tanpa data awal (kosong)
+            DefaultTableModel model = new DefaultTableModel(cols, 0) {
+                @Override
+                public boolean isCellEditable(int r, int c) {
                     return false;
                 }
             };
+
+            // --- LOGIKA MEMBACA CSV ---
+            try {
+                File file = new File("musics.csv");
+                if (file.exists()) {
+                    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file));
+                    String line;
+                    int rowNum = 1;
+                    while ((line = br.readLine()) != null) {
+                        // Split berdasarkan koma (sesuai format simpanBackend sebelumnya)
+                        String[] data = line.split(",");
+                        if (data.length >= 4) {
+                            // Menambahkan baris ke model tabel: {No, Judul, Artis, Album, Path, Menu}
+                            model.addRow(new Object[]{
+                                    String.valueOf(rowNum++),
+                                    data[0], // Judul
+                                    data[1], // Artis
+                                    data[2], // Album
+                                    data[3], // Path (Ganti Duration jadi Path untuk dimainkan)
+                                    "⋮"      // Menu icon
+                            });
+                        }
+                    }
+                    br.close();
+                }
+            } catch (Exception e) {
+                System.err.println("Gagal memuat data library: " + e.getMessage());
+            }
+
             JTable table = new JTable(model);
-            setupTableLogic(table, model, this, (t, a) -> frame.playSong(t, a));
+
+            // Modifikasi: Ambil Judul (col 1) dan Artis (col 2) saat diklik untuk dimainkan
+            setupTableLogic(table, model, this, null);
+
             JScrollPane scroll = new JScrollPane(table);
             scroll.getViewport().setBackground(COL_BG_MAIN);
             scroll.setBorder(null);
@@ -505,7 +580,7 @@ public class MusicFlow extends JFrame {
                         return false;
                     } };
                 JTable table = new JTable(model);
-                setupTableLogic(table, model, this, (t, a) -> mainFrame.playSong(t, a));
+                setupTableLogic(table, model, this, null);
                 JScrollPane scroll = new JScrollPane(table);
                 scroll.getViewport().setBackground(COL_BG_MAIN);
                 scroll.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
@@ -610,8 +685,26 @@ public class MusicFlow extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int row = table.rowAtPoint(e.getPoint());
                 int col = table.columnAtPoint(e.getPoint());
-                if (row != -1) { if (col == model.getColumnCount() - 1) showPopupMenu(e, row, model, parent);
-                    else if (action != null) action.onPlay(model.getValueAt(row, 1).toString(), model.getValueAt(row, 2).toString());
+
+                if (row != -1) {
+                    // Jika klik bukan pada kolom menu (titik tiga)
+                    if (col != model.getColumnCount() - 1) {
+                        // 1. Ambil data teks dari model tabel
+                        String title = model.getValueAt(row, 1).toString();
+                        String artist = model.getValueAt(row, 2).toString();
+
+                        // 2. Ambil data gambar (ImageIcon) dari Backend berdasarkan index baris
+                        byte[] rawImg = BackEnd.MusicManager.getRawCover(row);
+                        ImageIcon albumIcon = null;
+                        if (rawImg != null) {
+                            albumIcon = new ImageIcon(rawImg);
+                        }
+
+                        // 3. Panggil playSong dengan 3 parameter: Judul, Artis, dan ImageIcon
+                        playSong(row, title, artist, albumIcon);
+                    } else {
+                        showPopupMenu(e, row, model, parent);
+                    }
                 }
             } });
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() { public Component getTableCellRendererComponent(JTable table, Object value, boolean isSel, boolean hasFocus, int row, int col) { super.getTableCellRendererComponent(table, value, isSel, hasFocus, row, col); setHorizontalAlignment(CENTER); if (row == (int) table.getClientProperty("hoveredRow")) { setText("▶"); setForeground(COL_ACCENT); setFont(new Font("Segoe UI Symbol", Font.BOLD, 18)); } else { setText(value.toString()); setForeground(COL_TEXT_SEC); setFont(new Font("SansSerif", Font.PLAIN, 14)); } return this; } });
@@ -631,47 +724,44 @@ public class MusicFlow extends JFrame {
     private void showPopupMenu(MouseEvent e, int row, DefaultTableModel model, Component parent) { JPopupMenu popup = new JPopupMenu(); popup.setBackground(new Color(40, 40, 40)); popup.setBorder(BorderFactory.createLineBorder(new Color(60,60,60))); JMenuItem delItem = new JMenuItem("Delete Song"); delItem.setBackground(new Color(40, 40, 40)); delItem.setForeground(new Color(255, 80, 80)); delItem.setBorder(new EmptyBorder(10, 20, 10, 20)); delItem.addActionListener(evt -> model.removeRow(row)); popup.add(delItem); popup.show(e.getComponent(), e.getX(), e.getY()); }
 
     // --- CUSTOM BUTTONS ---
-    class GradientPlayButton extends JButton {
-        private boolean isPlaying = false;
+    class GradientStopButton extends JButton {
+
         private int size;
-        public GradientPlayButton(int size) {
+        public GradientStopButton(int size) {
             this.size = size;
             setPreferredSize(new Dimension(size, size));
             setContentAreaFilled(false);
             setFocusPainted(false);
             setBorderPainted(false);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
-            addActionListener(e -> { isPlaying = !isPlaying; repaint();
+
+            // Listener untuk memanggil fungsi stop di Backend
+            addActionListener(e -> {
+                BackEnd.MusicManager.stopLagu();
+                repaint();
             });
         }
-        public void setPlaying(boolean b) {
-            isPlaying = b;
-            repaint();
-        }
+
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Menggunakan palet warna aksen yang sama dengan tema MusicFlow
             g2.setPaint(new GradientPaint(0, 0, COL_ACCENT, getWidth(), getHeight(), COL_ACCENT_2));
             g2.fillOval(0, 0, getWidth(), getHeight());
+
             g2.setColor(Color.WHITE);
             int cx = getWidth() / 2;
             int cy = getHeight() / 2;
-            if (isPlaying) {
-                int barW = size / 7;
-                int barH = size / 3;
-                int gap = size / 10;
-                g2.fillRoundRect(cx - barW - gap/2, cy - barH/2, barW, barH, barW/2, barW/2);
-                g2.fillRoundRect(cx + gap/2, cy - barH/2, barW, barH, barW/2, barW/2);
-            }
-            else {
-                Path2D p = new Path2D.Double();
-                double iconR = size / 3.5;
-                double offset = size / 20.0;
-                p.moveTo(cx - iconR + offset, cy - iconR); p.lineTo(cx + iconR + offset, cy);
-                p.lineTo(cx - iconR + offset, cy + iconR); p.closePath();
-                g2.setStroke(new BasicStroke((float)size/15, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-                g2.fill(p);
-            }
+
+            // Menggambar Ikon STOP (Kotak di Tengah)
+            // Ukuran kotak disesuaikan secara proporsional dengan ukuran button
+            int stopSize = size / 3;
+            int x = cx - (stopSize / 2);
+            int y = cy - (stopSize / 2);
+
+            // fillRoundRect memberikan kesan modern dengan sudut sedikit melengkung (arc 5, 5)
+            g2.fillRoundRect(x, y, stopSize, stopSize, 5, 5);
         }
     }
     class PurpleButton extends JButton {

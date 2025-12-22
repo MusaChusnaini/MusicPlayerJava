@@ -4,7 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Menambahkan CSV" />
+    <list default="true" id="143111c9-da71-486b-9348-2f2469f9f495" name="Changes" comment="Adding xml metadata">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playlist.csv" beforeDir="false" afterPath="$PROJECT_DIR$/musics.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BackEnd/MusicManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FrontEnd/MusicFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$AddMusicPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$AddMusicPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$ArtPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$DashedBorder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$GradientPlayButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$IconSymbol.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$LibraryPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlayerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel$PlaylistGrid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PlaylistManagerPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PurpleButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$PurpleButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$RoundedBorder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$RoundedBorder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$SidebarButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow$SidebarButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MusicFlow.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +45,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="backend" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -55,6 +87,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "final-before-merge",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/aa/OneDrive/Dokumen/GitHub/MusicPlayerJava/Music",
@@ -129,6 +162,7 @@
     <MESSAGE value="Menambahkan Lagu-Lagu" />
     <MESSAGE value="Menambahkan Lagu Bat Country" />
     <MESSAGE value="Menambahkan CSV" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan CSV" />
+    <MESSAGE value="Adding xml metadata" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding xml metadata" />
   </component>
 </project>
