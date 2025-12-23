@@ -1,3 +1,6 @@
+Moch. Musa Chusnaini (202410370110411)
+Faris Ramadhan Riyanto (202410370110402)
+
 # 📖 Panduan Penggunaan Fitur MusicFlow
 
 Dokumen ini berisi panduan langkah demi langkah untuk menjalankan fitur-fitur utama pada aplikasi MusicFlow. Pastikan aplikasi sudah dijalankan (Run `MusicFlow.java`) sebelum mengikuti panduan ini.
